@@ -1,0 +1,10 @@
+ext {
+    libsVersion = [
+            springBootVersion = '3.3.4',
+            springDependencyManagementVersion = '1.1.6',
+            springCloudVersion = '2023.0.3',
+
+            openApiVersion = '2.6.0',
+            mapstructVersion = '1.5.5.Final'
+    ]
+}

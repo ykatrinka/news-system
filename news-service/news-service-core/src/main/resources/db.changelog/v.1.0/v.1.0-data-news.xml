@@ -1,0 +1,71 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd">
+
+
+    <changeSet id="insert-rows-news" author="Katerina">
+        <insert tableName="news">
+            <column name="title" value="News 1"/>
+            <column name="time" value="2024-09-07T19:03:28.832"/>
+            <column name="text" value="Это новость 1"/>
+        </insert>
+
+        <insert tableName="news">
+            <column name="title" value="News 2"/>
+            <column name="time" value="2024-09-07T19:03:28.832"/>
+            <column name="text" value="Это новость 2"/>
+        </insert>
+
+        <insert tableName="news">
+            <column name="title" value="News 3"/>
+            <column name="time" value="2024-09-07T19:03:28.832"/>
+            <column name="text" value="Это новость 3"/>
+        </insert>
+
+        <insert tableName="news">
+            <column name="title" value="News 4"/>
+            <column name="time" value="2024-09-07T19:03:28.832"/>
+            <column name="text" value="Это новость 4"/>
+        </insert>
+
+        <insert tableName="news">
+            <column name="title" value="News 5"/>
+            <column name="time" value="2024-09-07T19:03:28.832"/>
+            <column name="text" value="Это новость 5"/>
+        </insert>
+
+        <insert tableName="news">
+            <column name="title" value="News 6"/>
+            <column name="time" value="2024-09-07T19:03:28.832"/>
+            <column name="text" value="Это новость 6"/>
+        </insert>
+
+        <insert tableName="news">
+            <column name="title" value="News 7"/>
+            <column name="time" value="2024-09-07T19:03:28.832"/>
+            <column name="text" value="Это новость 7"/>
+        </insert>
+
+        <insert tableName="news">
+            <column name="title" value="News 8"/>
+            <column name="time" value="2024-09-07T19:03:28.832"/>
+            <column name="text" value="Это новость 8"/>
+        </insert>
+
+        <insert tableName="news">
+            <column name="title" value="News 9"/>
+            <column name="time" value="2024-09-07T19:03:28.832"/>
+            <column name="text" value="Это новость 9"/>
+        </insert>
+
+        <insert tableName="news">
+            <column name="title" value="News 10"/>
+            <column name="time" value="2024-09-07T19:03:28.832"/>
+            <column name="text" value="Это новость 10"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>

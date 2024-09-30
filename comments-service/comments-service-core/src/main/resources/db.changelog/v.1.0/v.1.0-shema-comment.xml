@@ -1,0 +1,23 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd">
+
+    <changeSet id="create-table-comment" author="Katerina">
+        <createTable tableName="comment">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_comment"
+
+                />
+            </column>
+            <column name="time" type="timestamp"/>
+            <column name="username" type="varchar(50)"/>
+            <column name="text" type="text"/>
+            <column name="news_id" type="bigint"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

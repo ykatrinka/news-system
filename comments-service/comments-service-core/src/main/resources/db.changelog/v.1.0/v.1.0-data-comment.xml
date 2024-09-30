@@ -1,0 +1,46 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd">
+
+
+    <changeSet id="insert-rows-comment" author="Katerina">
+        <insert tableName="comment">
+            <column name="news_id" value="1"/>
+            <column name="username" value="Coralie43"/>
+            <column name="time" value="2079-09-07T19:03:28.832"/>
+            <column name="text" value="Вот это сюрприз"/>
+        </insert>
+
+        <insert tableName="comment">
+            <column name="news_id" value="1"/>
+            <column name="username" value="Willa.Pouros63"/>
+            <column name="time" value="2019-12-20T14:25:18.927"/>
+            <column name="text" value="Круто"/>
+        </insert>
+
+        <insert tableName="comment">
+            <column name="news_id" value="2"/>
+            <column name="username" value="Fredy.Christiansen"/>
+            <column name="time" value="2023-11-16T06:28:49.271"/>
+            <column name="text" value="Это будет проблематично"/>
+        </insert>
+
+        <insert tableName="comment">
+            <column name="news_id" value="2"/>
+            <column name="username" value="Chelsey.Dietrich45"/>
+            <column name="time" value="2017-11-06T13:42:53.159"/>
+            <column name="text" value="Круто"/>
+        </insert>
+
+        <insert tableName="comment">
+            <column name="news_id" value="3"/>
+            <column name="username" value="Tara.Kilback76"/>
+            <column name="time" value="2018-02-01T11:43:21.361"/>
+            <column name="text" value="Вот это сюрприз"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>
