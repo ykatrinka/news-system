@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.clevertec.dto.request.CommentRequest;
 import ru.clevertec.dto.response.CommentResponse;
+import ru.clevertec.entity.Comment;
 import ru.clevertec.service.CommentService;
 
 import java.util.List;
@@ -80,5 +81,17 @@ public class CommentController {
     @DeleteMapping("{newsId}")
     public void deleteCommentsByNewsId(@PathVariable("newsId") Long newsId) {
         commentService.deleteCommentsByNewsId(newsId);
+    }
+
+    @GetMapping("comments/search")
+    public List<Comment> searchComments(
+            @RequestParam(name = "text") String text,
+            @RequestParam(
+                    name = "limit",
+                    defaultValue = "15",
+                    required = false) int limit,
+            @RequestParam(name = "fields") List<String> fields
+    ) {
+        return commentService.searchComments(text, fields, limit);
     }
 }

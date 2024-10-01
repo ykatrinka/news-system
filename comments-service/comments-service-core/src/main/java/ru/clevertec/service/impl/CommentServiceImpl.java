@@ -1,6 +1,7 @@
 package ru.clevertec.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import ru.clevertec.mapper.CommentMapper;
 import ru.clevertec.repository.CommentRepository;
 import ru.clevertec.service.CommentService;
 import ru.clevertec.util.Constants;
+import ru.clevertec.util.ReflectionUtil;
 
 import java.util.List;
 
@@ -100,5 +102,21 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteCommentsByNewsId(Long newsId) {
         commentRepository.deleteAllByNewsId(newsId);
+    }
+
+    @Override
+    public List<Comment> searchComments(String text, List<String> fields, int limit) {
+
+        List<String> searchableFields = ReflectionUtil.getFieldsByAnnotation(Comment.class, FullTextField.class);
+        List<String> fieldsToSearchBy = fields.isEmpty() ? searchableFields : fields;
+
+        boolean containsInvalidField = fieldsToSearchBy.stream().anyMatch(f -> !searchableFields.contains(f));
+
+        if (containsInvalidField) {
+            throw new IllegalArgumentException();
+        }
+
+        return commentRepository.searchBy(
+                text, limit, fieldsToSearchBy.toArray(new String[0]));
     }
 }

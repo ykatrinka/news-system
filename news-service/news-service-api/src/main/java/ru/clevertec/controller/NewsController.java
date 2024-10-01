@@ -17,6 +17,7 @@ import ru.clevertec.dto.request.NewsRequest;
 import ru.clevertec.dto.response.CommentResponse;
 import ru.clevertec.dto.response.NewsCommentsResponse;
 import ru.clevertec.dto.response.NewsResponse;
+import ru.clevertec.entity.News;
 import ru.clevertec.service.NewsService;
 
 import java.util.List;
@@ -106,5 +107,17 @@ public class NewsController {
     @GetMapping("/exists/{newsId}")
     public Boolean isExistsNews(@PathVariable("newsId") Long newsId) {
         return newsService.isExistsNews(newsId);
+    }
+
+    @GetMapping("/search")
+    public List<News> searchNews(
+            @RequestParam(name = "text") String text,
+            @RequestParam(
+                    name = "limit",
+                    defaultValue = "15",
+                    required = false) int limit,
+            @RequestParam(name = "fields") List<String> fields
+    ) {
+        return newsService.searchNews(text, fields, limit);
     }
 }
