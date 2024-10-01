@@ -10,6 +10,12 @@ spring:
     username: postgres
     password: postgres
     url: jdbc:postgresql://localhost:5432/news_system
+  properties:
+    hibernate:
+      search:
+        backend:
+          type: lucene
+          directory.root: ./data/index
 
   liquibase:
     change-log: db.changelog/changelog-master.xml

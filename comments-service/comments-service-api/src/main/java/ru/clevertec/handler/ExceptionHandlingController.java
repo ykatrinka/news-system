@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ru.clevertec.exception.CommentIndexException;
 import ru.clevertec.exception.CommentNotFoundException;
 import ru.clevertec.exception.NewsNotExistsException;
 
@@ -38,6 +39,17 @@ public class ExceptionHandlingController {
                 .build();
 
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {CommentIndexException.class})
+    public ResponseEntity<ErrorMessage> handleCommentIndexExceptions(CommentIndexException e) {
+        ErrorMessage errorMessage = ErrorMessage.builder()
+                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .timeStamp(LocalDateTime.now())
+                .message(e.getMessage())
+                .build();
+
+        return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

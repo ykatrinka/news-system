@@ -2,6 +2,7 @@ package ru.clevertec.service.impl;
 
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import ru.clevertec.mapper.NewsMapper;
 import ru.clevertec.repository.NewsRepository;
 import ru.clevertec.service.NewsService;
 import ru.clevertec.util.Constants;
+import ru.clevertec.util.ReflectionUtil;
 
 import java.util.List;
 
@@ -122,5 +124,21 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public boolean isExistsNews(Long newsId) {
         return newsRepository.existsById(newsId);
+    }
+
+    @Override
+    public List<News> searchNews(String text, List<String> fields, int limit) {
+
+        List<String> searchableFields = ReflectionUtil.getFieldsByAnnotation(News.class, FullTextField.class);
+        List<String> fieldsToSearchBy = fields.isEmpty() ? searchableFields : fields;
+
+        boolean containsInvalidField = fieldsToSearchBy.stream().anyMatch(f -> !searchableFields.contains(f));
+
+        if (containsInvalidField) {
+            throw new IllegalArgumentException();
+        }
+
+        return newsRepository.searchBy(
+                text, limit, fieldsToSearchBy.toArray(new String[0]));
     }
 }

@@ -5,6 +5,8 @@ ext {
             springCloudVersion = '2023.0.3',
 
             openApiVersion = '2.6.0',
-            mapstructVersion = '1.5.5.Final'
+            mapstructVersion = '1.5.5.Final',
+
+            hibernateSearchVersion = '7.1.2.Final'
     ]
 }

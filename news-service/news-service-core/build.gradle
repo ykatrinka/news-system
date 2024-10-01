@@ -27,6 +27,10 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    //full text search
+    implementation "org.hibernate.search:hibernate-search-mapper-orm:${hibernateSearchVersion}"
+    implementation "org.hibernate.search:hibernate-search-backend-lucene:${hibernateSearchVersion}"
 }
 
 test {

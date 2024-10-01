@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.clevertec.exception.CommentNotFoundException;
+import ru.clevertec.exception.NewsIndexException;
 import ru.clevertec.exception.NewsNotFoundException;
 import ru.clevertec.exception.NotMatchNewsCommentException;
 
@@ -50,6 +51,17 @@ public class ExceptionHandlingController {
                 .build();
 
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = {NewsIndexException.class})
+    public ResponseEntity<ErrorMessage> handleNewsIndexExceptions(NewsIndexException e) {
+        ErrorMessage errorMessage = ErrorMessage.builder()
+                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .timeStamp(LocalDateTime.now())
+                .message(e.getMessage())
+                .build();
+
+        return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
