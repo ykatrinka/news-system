@@ -78,7 +78,7 @@ public class CommentController {
     }
 
     //delete all comments by newsId
-    @DeleteMapping("{newsId}")
+    @DeleteMapping("{newsId}/comments")
     public void deleteCommentsByNewsId(@PathVariable("newsId") Long newsId) {
         commentService.deleteCommentsByNewsId(newsId);
     }
