@@ -1,9 +1,14 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot'
 }
 
 group = 'ru.clevertec'
 version = '0.0.1-SNAPSHOT'
+
+jar {
+    manifest.attributes("Main-Class": 'ru.clevertec.CommentsServiceApplication')
+}
 
 repositories {
     mavenCentral()

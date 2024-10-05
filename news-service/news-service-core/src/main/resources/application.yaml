@@ -5,11 +5,6 @@ spring:
   jpa:
     generate-ddl: false
     show-sql: true
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    username: postgres
-    password: postgres
-    url: jdbc:postgresql://localhost:5432/news_system
   properties:
     hibernate:
       search:
@@ -30,12 +25,43 @@ logging:
   file:
     name: ./logs/log-file.log
 
-feign:
-  client:
-    news:
-      name: comments
-      url: "http://localhost:8082"
-
 cache:
   capacity: 10
   type: LRU
+
+---
+spring:
+  profiles:
+    active: prod
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/news_system
+  feign:
+    client:
+      news:
+        name: comments
+        url: "http://localhost:8082"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://news-db:5432/news_system
+    username: postgres
+    password: postgres
+  feign:
+    client:
+      news:
+        name: comments
+        url: "http://comments-service:8082"

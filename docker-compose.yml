@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  news-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: "news_system"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    container_name: news-db
+    ports:
+      - "5432:5432"
+    networks:
+      - news-system
+
+  comments-service:
+    image: comments-service-image
+    container_name: comments-service
+    build:
+      context: ./comments-service
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - news-db
+    networks:
+      - news-system
+
+  news-service:
+    image: news-service-image
+    container_name: news-service
+    build:
+      context: ./news-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - news-db
+    networks:
+      - news-system
+
+networks:
+  news-system:
+    driver: bridge

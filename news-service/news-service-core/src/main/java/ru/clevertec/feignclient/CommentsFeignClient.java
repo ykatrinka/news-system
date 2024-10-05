@@ -11,8 +11,8 @@ import ru.clevertec.dto.response.CommentResponse;
 import java.util.List;
 
 @FeignClient(
-        name = "${feign.client.news.name}",
-        url = "${feign.client.news.url}",
+        name = "${spring.feign.client.news.name}",
+        url = "${spring.feign.client.news.url}",
         configuration = {CommentsFeignConfiguration.class}
 )
 public interface CommentsFeignClient {
