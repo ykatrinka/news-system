@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import ru.clevertec.conf.NewsFeignConfiguration;
 
 @FeignClient(
-        name = "${feign.client.news.name}",
-        url = "${feign.client.news.url}",
+        name = "${spring.feign.client.news.name}",
+        url = "${spring.feign.client.news.url}",
         configuration = NewsFeignConfiguration.class
 )
 public interface NewsFeignClient {
