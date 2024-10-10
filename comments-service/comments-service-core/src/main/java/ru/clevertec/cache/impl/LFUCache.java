@@ -10,7 +10,7 @@ import java.util.Optional;
 public class LFUCache<K, V> implements CustomCache<K, V> {
 
     @Value("${cache.capacity}")
-    private int capacity;
+    private int capacity = 10;
     private final Map<K, V> cacheList = new HashMap<>();
     private final Map<K, Integer> frequencyMap = new HashMap<>();
 
@@ -43,8 +43,8 @@ public class LFUCache<K, V> implements CustomCache<K, V> {
     private void removeOldest() {
         Optional<K> removedKey = frequencyMap.values().stream()
                 .min(Integer::compareTo)
-                .flatMap(min -> cacheList.entrySet().stream()
-                        .filter(entry -> entry.getValue() == min)
+                .flatMap(min -> frequencyMap.entrySet().stream()
+                        .filter(entry -> entry.getValue().equals(min))
                         .map(Map.Entry::getKey)
                         .findFirst());
 

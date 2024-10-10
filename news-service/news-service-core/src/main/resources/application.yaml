@@ -38,7 +38,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile: dev
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
@@ -46,8 +46,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/news_system
   feign:
     client:
-      news:
-        name: comments
+      comments-service:
+        name: comments-service
         url: "http://localhost:8082"
 
 ---
@@ -62,6 +62,24 @@ spring:
     password: postgres
   feign:
     client:
-      news:
-        name: comments
+      comments-service:
+        name: comments-service
         url: "http://comments-service:8082"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://news-db:5432/news_system_test
+    username: postgres
+    password: postgres
+  liquibase:
+    change-log: classpath:db.changelog/changelog-test.xml
+  feign:
+    client:
+      comments-service:
+        name: comments-service
+        url: "http://localhost:8082"

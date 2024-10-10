@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.clevertec.dto.request.CommentRequest;
 import ru.clevertec.dto.response.CommentResponse;
-import ru.clevertec.entity.Comment;
 import ru.clevertec.service.CommentService;
 
 import java.util.List;
@@ -40,6 +40,7 @@ public class CommentController {
                     required = false) int pageNumber
     ) {
         List<CommentResponse> comments = commentService.getAllComments(pageNumber - 1);
+
         return new ResponseEntity<>(comments, comments.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
     }
 
@@ -51,7 +52,7 @@ public class CommentController {
     }
 
     //CRUD - update
-    @PostMapping("/comments/{commentId}")
+    @PutMapping("/comments/{commentId}")
     public ResponseEntity<CommentResponse> updateComment(@PathVariable("commentId") Long commentId,
                                                          @Valid @RequestBody CommentRequest commentRequest) {
         CommentResponse comment = commentService.updateComment(commentId, commentRequest);
@@ -84,7 +85,7 @@ public class CommentController {
     }
 
     @GetMapping("comments/search")
-    public List<Comment> searchComments(
+    public ResponseEntity<List<CommentResponse>> searchComments(
             @RequestParam(name = "text") String text,
             @RequestParam(
                     name = "limit",
@@ -92,6 +93,7 @@ public class CommentController {
                     required = false) int limit,
             @RequestParam(name = "fields") List<String> fields
     ) {
-        return commentService.searchComments(text, fields, limit);
+        List<CommentResponse> comments = commentService.searchComments(text, fields, limit);
+        return new ResponseEntity<>(comments, comments.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
     }
 }

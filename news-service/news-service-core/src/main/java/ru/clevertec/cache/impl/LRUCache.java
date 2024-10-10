@@ -10,7 +10,7 @@ import java.util.Optional;
 public class LRUCache<K, V> implements CustomCache<K, V> {
 
     @Value("${cache.capacity}")
-    private int capacity;
+    private int capacity = 10;
     private final Map<K, Node<K, V>> cacheList = new HashMap<>();
     private Node<K, V> head = new Node<>(null, null);
     private Node<K, V> tail = new Node<>(null, null);
@@ -59,6 +59,10 @@ public class LRUCache<K, V> implements CustomCache<K, V> {
     }
 
     private void removeNode(Node<K, V> node) {
+        if (node == null) {
+            return;
+        }
+
         if (node.prev != null) {
             node.prev.next = node.next;
         } else {

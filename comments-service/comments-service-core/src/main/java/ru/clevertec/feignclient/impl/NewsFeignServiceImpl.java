@@ -13,6 +13,7 @@ public class NewsFeignServiceImpl implements NewsFeignService {
 
     @Override
     public boolean isNotExistsNews(final Long newsId) {
-        return !newsFeignClient.isExistsNews(newsId);
+        Boolean result = newsFeignClient.isExistsNews(newsId).getBody();
+        return result != null && !result;
     }
 }

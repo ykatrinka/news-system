@@ -105,7 +105,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> searchComments(String text, List<String> fields, int limit) {
+    public List<CommentResponse> searchComments(String text, List<String> fields, int limit) {
 
         List<String> searchableFields = ReflectionUtil.getFieldsByAnnotation(Comment.class, FullTextField.class);
         List<String> fieldsToSearchBy = fields.isEmpty() ? searchableFields : fields;
@@ -116,7 +116,11 @@ public class CommentServiceImpl implements CommentService {
             throw new IllegalArgumentException();
         }
 
-        return commentRepository.searchBy(
+        List<Comment> comments = commentRepository.searchBy(
                 text, limit, fieldsToSearchBy.toArray(new String[0]));
+
+        return comments.stream()
+                .map(commentMapper::commentToResponse)
+                .toList();
     }
 }

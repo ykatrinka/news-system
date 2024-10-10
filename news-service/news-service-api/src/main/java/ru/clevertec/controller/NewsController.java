@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +18,6 @@ import ru.clevertec.dto.request.NewsRequest;
 import ru.clevertec.dto.response.CommentResponse;
 import ru.clevertec.dto.response.NewsCommentsResponse;
 import ru.clevertec.dto.response.NewsResponse;
-import ru.clevertec.entity.News;
 import ru.clevertec.service.NewsService;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public class NewsController {
     }
 
     //CRUD - update
-    @PostMapping("/{newsId}")
+    @PutMapping("/{newsId}")
     public ResponseEntity<NewsResponse> updateNews(@PathVariable("newsId") Long newsId,
                                                    @Valid @RequestBody NewsRequest newsRequest) {
         NewsResponse news = newsService.updateNews(newsId, newsRequest);
@@ -91,7 +91,7 @@ public class NewsController {
                                                                     defaultValue = "1",
                                                                     required = false) int pageNumber) {
 
-        NewsCommentsResponse news = newsService.getNewsWithCommentsById(newsId, pageNumber);
+        NewsCommentsResponse news = newsService.getNewsByIdWithComments(newsId, pageNumber);
         return new ResponseEntity<>(news, HttpStatus.OK);
     }
 
@@ -105,12 +105,12 @@ public class NewsController {
 
 
     @GetMapping("/exists/{newsId}")
-    public Boolean isExistsNews(@PathVariable("newsId") Long newsId) {
-        return newsService.isExistsNews(newsId);
+    public ResponseEntity<Boolean> isExistsNews(@PathVariable("newsId") Long newsId) {
+        return new ResponseEntity<>(newsService.isExistsNews(newsId), HttpStatus.OK);
     }
 
     @GetMapping("/search")
-    public List<News> searchNews(
+    public ResponseEntity<List<NewsResponse>> searchNews(
             @RequestParam(name = "text") String text,
             @RequestParam(
                     name = "limit",
@@ -118,6 +118,6 @@ public class NewsController {
                     required = false) int limit,
             @RequestParam(name = "fields") List<String> fields
     ) {
-        return newsService.searchNews(text, fields, limit);
+        return new ResponseEntity<>(newsService.searchNews(text, fields, limit), HttpStatus.OK);
     }
 }
