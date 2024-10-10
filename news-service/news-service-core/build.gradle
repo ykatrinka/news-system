@@ -25,12 +25,13 @@ dependencies {
     implementation "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
     //full text search
     implementation "org.hibernate.search:hibernate-search-mapper-orm:${hibernateSearchVersion}"
     implementation "org.hibernate.search:hibernate-search-backend-lucene:${hibernateSearchVersion}"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.wiremock:wiremock-standalone:3.6.0'
 }
 
 test {

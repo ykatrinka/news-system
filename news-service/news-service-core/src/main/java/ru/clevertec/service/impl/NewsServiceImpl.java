@@ -82,7 +82,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional(readOnly = true)
-    public NewsCommentsResponse getNewsWithCommentsById(Long newsId, int pageNumber) {
+    public NewsCommentsResponse getNewsByIdWithComments(Long newsId, int pageNumber) {
         News news = newsRepository.findById(newsId)
                 .orElseThrow(() -> NewsNotFoundException.getById(newsId));
         List<CommentResponse> comments = commentsFeignService.getCommentsByNewsId(newsId, pageNumber);
@@ -127,7 +127,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List<News> searchNews(String text, List<String> fields, int limit) {
+    public List<NewsResponse> searchNews(String text, List<String> fields, int limit) {
 
         List<String> searchableFields = ReflectionUtil.getFieldsByAnnotation(News.class, FullTextField.class);
         List<String> fieldsToSearchBy = fields.isEmpty() ? searchableFields : fields;
@@ -138,7 +138,10 @@ public class NewsServiceImpl implements NewsService {
             throw new IllegalArgumentException();
         }
 
-        return newsRepository.searchBy(
+        List<News> news = newsRepository.searchBy(
                 text, limit, fieldsToSearchBy.toArray(new String[0]));
+        return news.stream()
+                .map(newsMapper::newsToResponse)
+                .toList();
     }
 }

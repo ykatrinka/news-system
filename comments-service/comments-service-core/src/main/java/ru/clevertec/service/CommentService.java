@@ -2,7 +2,6 @@ package ru.clevertec.service;
 
 import ru.clevertec.dto.request.CommentRequest;
 import ru.clevertec.dto.response.CommentResponse;
-import ru.clevertec.entity.Comment;
 
 import java.util.List;
 
@@ -21,5 +20,5 @@ public interface CommentService {
 
     void deleteCommentsByNewsId(Long newsId);
 
-    List<Comment> searchComments(String text, List<String> fields, int limit);
+    List<CommentResponse> searchComments(String text, List<String> fields, int limit);
 }

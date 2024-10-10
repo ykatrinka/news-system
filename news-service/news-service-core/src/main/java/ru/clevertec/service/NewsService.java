@@ -4,7 +4,6 @@ import ru.clevertec.dto.request.NewsRequest;
 import ru.clevertec.dto.response.CommentResponse;
 import ru.clevertec.dto.response.NewsCommentsResponse;
 import ru.clevertec.dto.response.NewsResponse;
-import ru.clevertec.entity.News;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ public interface NewsService {
 
     NewsResponse getNewsById(Long newsId);
 
-    NewsCommentsResponse getNewsWithCommentsById(Long newsId, int pageNumber);
+    NewsCommentsResponse getNewsByIdWithComments(Long newsId, int pageNumber);
 
     NewsResponse updateNews(Long newsId, NewsRequest newsRequest);
 
@@ -28,5 +27,5 @@ public interface NewsService {
 
     boolean isExistsNews(Long newsId);
 
-    List<News> searchNews(String text, List<String> fields, int limit);
+    List<NewsResponse> searchNews(String text, List<String> fields, int limit);
 }

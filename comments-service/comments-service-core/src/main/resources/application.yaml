@@ -26,9 +26,11 @@ logging:
   file:
     name: ./logs/log-file.log
 
+
 cache:
   capacity: 10
   type: LRU
+
 
 ---
 spring:
@@ -47,8 +49,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/news_system
   feign:
     client:
-      news:
-        name: news
+      news-service:
+        name: news-service
         url: "http://localhost:8081"
 
 ---
@@ -63,6 +65,24 @@ spring:
     password: postgres
   feign:
     client:
-      news:
-        name: news
+      news-service:
+        name: news-service
         url: "http://news-service:8081"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://news-db:5432/news_system_test
+    username: postgres
+    password: postgres
+  liquibase:
+    change-log: classpath:db.changelog/changelog-test.xml
+  feign:
+    client:
+      news-service:
+        name: news-service
+        url: "http://localhost:8081"
